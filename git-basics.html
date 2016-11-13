@@ -49,6 +49,7 @@
                         <ul>
                             <li class="fragment">What is Git?</li>
                             <li class="fragment">Terminology</li>
+                            <li class="fragment">Working in Git</li>
                         </ul>
                     </p>
                 </section>
@@ -59,38 +60,66 @@
                 <section>
                     <section>
                         <h1>Git terminology</h1>
-                        <p>It's really important that we all speak the same language</p>
+                        <h2>- the basic concepts</h2>
+                        <blockquote>"It's really important that we all speak the same language"</blockquote>
                     </section>
                     <section>
-                        <h1>Git terminology</h1>
-                        <thead>
-                            <td>
-                                Term/command
-                            </td>
-                            <td>
-                                What it means
-                            </td>
-                        </thead>
-                        <tr>
-                            <td>clone</td>
-                            <td>copies an existing git repository, normally from some remote location to your local environment.</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        <h1>The 'repo'</h1>
+                        <p>
+                            Everyone has a complete copy of the whole repository, residing in the <b>.git</b> folder in the working directory.
+                        </p>
+                    </section>
+                    <section>
+                        <h1>Working copy</h1>
+                        <p>The current set of checked-out files.</p>
+                    </section>
+                    <section>
+                        <h1>Commit (the verb)</h1>
+                        <p>Submits files to the repository (the local clone)</p>
+                    </section>
+                    <section>
+                        <h1>Commit (the noun)</h1>
+                        <p>A commit is a snapshot of the working dir stored in the repo.</p>
+                    </section>
+                    <section>
+                        <h1>Check out</h1>
+                        <p>Update your working directory from the repo. For example when switching branches.</p>
+                    </section>
+                    <section>
+                        <h1>Fetch or Pull</h1>
+                        <p><i>Fetch: </i> update the local repo from the remote without checking out</p>
+                        <p><i>Pull: </i> update the local repo from the remote and check out the latest snapshot</p>
+                    </section>
+                    <section>
+                        <h1>Push</h1>
+                        <p>Submit code to a remote repository</p>
+                    </section>
+                    <section>
+                        <h1>Remote</h1>
+                        <p>Remotes are copies of the repository in other places, like on a central server</p>
+                        <p>You can configure multiple remotes in your repository</p>
+                    </section>
+                    <section>
+                        <h1>SHA / Commit Hash</h1>
+                        <p>Every commit or node in the tree is identified by a unique key. This is a SHA-1 hash of the commit contents.</p>
+                        <aside class="notes">
+                            You can use commit hashes to perform operations on specific nodes in the git tree.
+                        </aside> 
+                    </section>
+                    <section>
+                        <h1>Head</h1>
+                        <p>HEAD is a reference to the current node representing our working dir.</p>
+                    </section>
+                    <section>
+                        <h1>Tip</h1>
+                        <p>The tip is what we call the last commit on a given branch.</p>
+                        <aside class="notes">
+                        HEAD is really just a pointer to the tip of the currently checked-out branch.
+                        </aside>
+                    </section>
+                    <section>
+                        <h1>Branch</h1>
+                        <p>Just like with other VCS systems except in Git a branch is just a label on a given node. It is not a physical copy of the files.</p>
                     </section>
                 </section>
 		</div>
@@ -115,7 +144,7 @@
                     id: '9e2066bdbfc85901',
                     url: 'https://socketio.azurewebsites.net'
                 },
-				// Optional reveal.js plugins
+				//Optional reveal.js plugins
 				dependencies: [
 	                { src: 'socket.io/socket.io.js', async: true },
                     { src: '//cdn.socket.io/socket.io-1.3.5.js', async: true },
