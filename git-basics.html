@@ -83,12 +83,12 @@
                         <p>The current set of checked-out files.</p>
                     </section>
                     <section>
-                        <h1>Commit (the verb)</h1>
-                        <p>Submits files to the repository (the local clone)</p>
+                        <h1>Commit <i>(n.)</i></h1>
+                        <p>A commit is a snapshot of the working dir stored in the repo.</p>
                     </section>
                     <section>
-                        <h1>Commit (the noun)</h1>
-                        <p>A commit is a snapshot of the working dir stored in the repo.</p>
+                        <h1>Commit <i>(v.)</i></h1>
+                        <p>Submits files to the repository (the local clone)</p>
                     </section>
                     <section>
                         <h1>Check out</h1>
@@ -129,13 +129,197 @@
                     <section>
                         <h1>Branch</h1>
                         <p>Just like with other VCS systems except in Git a branch is just a label on a given node. It is not a physical copy of the files.</p>
+                        <aside class="notes">
+                        An important thing to remember is the local nature of git. Bramches you create are not visible to others until you actively push them to remote.
+                        </aside>
+                    </section>
+                    <section>
+                        <h1>Base</h1>
+                        <p>The <i>base</i> or <i>merge base</i> is the commit at which your branch diverged. </p>
+                        <img src="images/GitIntro/visualizations/mergebase.png" />
                     </section>
                 </section>
                 <section>
-                    <h1>Working in Git</h1>
-                    <img src="images/GitIntro/In-case-of-fire-git-commit-git-push.png" width="80%" />
+                    <section>
+                        <h1>Working in Git</h1>
+                        <img src="images/GitIntro/In-case-of-fire-git-commit-git-push.png" width="80%" />    
+                    </section>
+                    <section>
+                        <h1>The basic workflow</h1>
+                        <p>
+                            <ul>
+                                <li class="fragment grow">git clone https://url-to-remote-repo</li>
+                                <li class="fragment grow">git checkout -b "feature/my-feature</li>
+                                <li class="fragment grow">... do work ...</li>
+                                <li class="fragment grow">git commit</li>
+                                <li class="fragment grow">git push</li>
+                            </ul>    
+                        </p>
+                    </section>
+                    <section>
+                        <h1>The three 'trees'</h1>
+                        <img src="images/GitIntro/trees.png" />
+                        <aside class="notes">
+                        Your local repository consists of three "trees" maintained by git. The first one is your <b>Working Directory</b> which holds the actual files. the second one is the <b>Index</b> which acts as a staging area and finally the <b>HEAD</b> which points to the last commit you've made. </aside>
+                    </section>
+                    <section>
+                        <h1>Add &amp; Commit</h1>
+                        <p>Propose changes (add to the <b>Index</b>):
+                        
+                        <pre><code class="hljs" data-trim contenteditable>
+git add &lt;filename&gt;
+      --
+git add *</code></pre>                    
+                        <pre><code class="hljs" data-trim>
+git commit -m"My commit message"</code></pre>
+                        </p>
+                        <aside class="notes">
+                        <ul>
+                        <li>You add files to the index to begin crafting your commit. You can group related changes in several files together in one commit while leaving out other files that aren't related.</li>
+                        <li>To actually store these changes in the git repo, you need to commit them using the commit command. This packages up the changes in your index and stores them once and for all in the git repo.</li>
+                        <li>Your changes are now in the HEAD of your local working copy</li>
+                        </ul>
+                        </aside>
+                    </section>
+                    <section>
+                        <h1>Pushing your changes</h1>
+                        <p>
+                        <pre><code class="hljs" data-trim>
+git push origin feature/my-feature
+</code></pre>
+                        </p>
+                        <aside class="notes">
+                        This command pushes your branch to the remote named "origin"
+                        </aside>
+                    </section>
+                    <section>
+                        <h1>Branching</h1>
+                        <p>Branches are used to develop features or bugfixes in isolation from each other.</p>
+                        <p>Our main branch is called <i>develop</i></p>
+                        <p>Feature and bugfix branches generally branch out from this branch</p>
+                        <aside class="notes">
+                        Remember that in git, a branch is nothing more than a reference to a commit in the tree.
+                        </aside> 
+                    </section>
                 </section>
-
+                <section>
+                    <h1>Integrating our work</h1>
+                    <p>We can integrate our work in two ways: <i>merge</i> or <i>rebase</i> <br>
+                    We'll dive in to these two now</p>
+                </section>
+                <section>
+                    <section>
+                        <h1>Merging</h1>
+                        <p>We can integrate two branches by performing a standard merge.<br />
+                        <img src="images/GitIntro/visualizations/simplebranchandmerge.png" />
+                    </section>
+                    <section>
+                        <h1>Rebasing</h1>
+                        <p>Rebasing can seem a little scary and confusing to begin with</p>
+                        <p>Think of it as a way of packaging up your commits and putting them onto a different branch</p>
+                    </section>
+                    <section>
+                        <h1>What rebasing looks like</h1>
+                        <h2>Imagine this scenario</h2>
+                        <img src="images/GitIntro/visualizations/rebase-1.png" />
+                    </section>
+                    <section>
+                        <h1>If developer decides to do a plain merge</h1>
+                        <img src="images/GitIntro/visualizations/rebase-2.png" />
+                    </section>
+                    <section>
+                        <h1>If we rebase instead</h1>
+                        <img src="images/GitIntro/visualizations/rebase-3.png" />
+                    </section>
+                    <section>
+                        <h1>The problems with merge</h1>
+                        <img src="images/GitIntro/visualizations/rebase-4.png" />
+                        <aside class="notes">
+                        Merge spaghetti easily happens when many developers work together on a code base. <br />
+                        It gets even worse when multiple developers work on the same features, constantly pulling changes from each other </aside>
+                    </section>
+                    <section>
+                        <h2>Rebase makes history neater</h2>
+                        <img src="images/GitIntro/visualizations/rebase-5.png" />
+                    </section>
+                    <section>
+                        <h1>What rebase does</h1>
+                        <p>
+                            <ul>
+                                <li>Find merge base</li>
+                                <li>Stash all your commits since base</li>
+                                <li>Reset your HEAD to tip of target branch </li>
+                                <li>Replays your commits one-by-one on top of the new target</li>
+                            </ul>
+                        </p>
+                    </section>
+                    <section>
+                        <h1>Collaborating on a branch</h1>
+                        <p><i>git pull --rebase</i></p>
+                    </section>
+                    <section>
+                        <h1>Interactive Rebase</h1>
+                        <p><pre><code class="hljs" data-trim">git rebase -i HEAD~n</code></pre></p>
+                        <p>Allows you to edit your commits before submitting for review.</p>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h1>Summary</h1>
+                    </section>
+                    <section>
+                        <h1>Almost every operation is local!</h1>
+                        <blockquote>Git feels fast because it doesn't need network for most things.</blockquote>
+                    </section>
+                    <section>
+                        <h1>Exceptions are: </h1>
+                        <blockquote class="fragment">clone,</blockquote>
+                        <blockquote class="fragment">pull / fetch</blockquote>
+                        <blockquote class="fragment">and push</blockquote>
+                    </section>
+                    <section>
+                        <h1>You can reference non-local repos</h1>
+                        <blockquote class="fragment">These are configured as <b>remotes</b> in your repo</blockquote>
+                    </section>
+                    <section>
+                        <h1>Branching is cheap!</h1>
+                        <blockquote class="fragment">A branch is literally just writing 40 bytes to a file on disk.</blockquote>
+                        <aside class="notes">A branch is just a text file in .git/refs/heads that contains the commit hash that this branch points to.</aside>
+                    </section>
+                    <section>
+                        <h1>Git is good at integrating branches</h1>
+                    </section>
+                    <section>
+                        <h1>Integration can happen in two ways: </h1>
+                        <blockquote class="fragment">merging</blockquote>
+                        <blockquote class="fragment">rebasing</blockquote>
+                    </section>
+                    <section>
+                        <h1>Pathfinder uses a special integration workflow</h1>
+                        <blockquote class="fragment">A variant of the <i>git flow</i> workflow</blockquote>
+                        <span class="fragment">* There's a thorough walk-through in the Pathfinder WIKI</span>
+                    </section>
+                    <section>
+                        <h1>You need to care about history!</h1>
+                        <p class="fragment">
+                            Always take a look at your graph before pushing changes.
+                        </p>
+                        <p>
+                            <ul>
+                                <li class="fragment">Does your commit history make sense?</li>
+                                <li class="fragment">Are your commit messages clear and error-free?</li>
+                                <li class="fragment">Are there any "WIP" commits?</li>
+                            </ul>
+                        </p>
+                    </section>
+                    <section>
+                        <h1>Fix stuff before pushing</h1>
+                        <p>Before you submit a Pull Request, fix your local branch so everything looks good.</p>
+                    </section>
+                    <section data-background="images/GitIntro/questions.jpg">
+                    </section>
+                </section>
+            </div>   
 		</div>
 
 		<script src="lib/js/head.min.js"></script>
@@ -153,18 +337,18 @@
 
 				transition: 'slide', // none/fade/slide/convex/concave/zoom
 
-                multiplex: {
+                /*multiplex: {
                     secret: '14790332233547146315',
                     id: '9e2066bdbfc85901',
                     url: 'https://socketio.azurewebsites.net'
-                },
+                },*/
 				//Optional reveal.js plugins
 				dependencies: [
-	                { src: 'socket.io/socket.io.js', async: true },
+/*	                { src: 'socket.io/socket.io.js', async: true },
                     { src: '//cdn.socket.io/socket.io-1.3.5.js', async: true },
                     { src: ' plugin/multiplex/master.js', async: true },
     	            { src: 'plugin/notes-server/client.js', async: true },
-					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+*/					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
 					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
