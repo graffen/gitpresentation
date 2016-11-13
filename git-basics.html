@@ -395,18 +395,18 @@ pick bac187f request fullscreen on documentElement instead of body
 
 				transition: 'slide', // none/fade/slide/convex/concave/zoom
 
-                /*multiplex: {
+                multiplex: {
                     secret: '14790332233547146315',
                     id: '9e2066bdbfc85901',
                     url: 'https://socketio.azurewebsites.net'
-                },*/
+                },
 				//Optional reveal.js plugins
 				dependencies: [
-/*	                { src: 'socket.io/socket.io.js', async: true },
+	                { src: 'socket.io/socket.io.js', async: true },
                     { src: '//cdn.socket.io/socket.io-1.3.5.js', async: true },
                     { src: ' plugin/multiplex/master.js', async: true },
     	            { src: 'plugin/notes-server/client.js', async: true },
-*/					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
 					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
