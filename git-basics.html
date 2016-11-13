@@ -85,6 +85,7 @@
                     <section>
                         <h1>Commit <i>(n.)</i></h1>
                         <p>A commit is a snapshot of the working dir stored in the repo.</p>
+                        <p>Every commit references its parent(s). Multi-parent commits are called <i>merges</i>.</p>
                     </section>
                     <section>
                         <h1>Commit <i>(v.)</i></h1>
@@ -137,6 +138,22 @@
                         <h1>Base</h1>
                         <p>The <i>base</i> or <i>merge base</i> is the commit at which your branch diverged. </p>
                         <img src="images/GitIntro/visualizations/mergebase.png" />
+                    </section>
+                    <section>
+                        <h1>Merge</h1>
+                        <p>As in other VCSes, merging is the process of integrating two branches and resolving any conflicts.</p>
+                    </section>
+                    <section>
+                        <h1>Fast-forward merge</h1>
+                        <p>This is a special concept in git.</p>
+                        <p>If we try to merge the branch <i>hotfix</i> into <i>master</i><br />
+                        <img src="images/GitIntro/visualizations/basic-branching-4.png" />
+                        </p>
+                    </section>
+                    <section>
+                        <h2>master's pointer is moved</h2>
+                        <p><img src="images/GitIntro/visualizations/basic-branching-5.png" /><br />
+                        Because <i>master</i> is a direct ancestor of <i>hotfix</i></p>
                     </section>
                 </section>
                 <section>
@@ -232,9 +249,10 @@ git push origin feature/my-feature
                         <img src="images/GitIntro/visualizations/rebase-3.png" />
                     </section>
                     <section>
-                        <h1>The problems with merge</h1>
+                        <h1>The problem with merges</h1>
                         <img src="images/GitIntro/visualizations/rebase-4.png" />
                         <aside class="notes">
+                        Git is <i>really</i> good at merging. But it can create a confusing and convoluted history.
                         Merge spaghetti easily happens when many developers work together on a code base. <br />
                         It gets even worse when multiple developers work on the same features, constantly pulling changes from each other </aside>
                     </section>
@@ -262,6 +280,28 @@ git push origin feature/my-feature
                         <p><pre><code class="hljs" data-trim">git rebase -i HEAD~n</code></pre></p>
                         <p>Allows you to edit your commits before submitting for review.</p>
                     </section>
+                    <section>
+                        <h2>Interactive mode opens a text editor</h2>
+                        <p>
+                        <pre><code class="hljs" data-trim>
+pick a8c4109 Update README.md
+pick 904f987 slides banner
+pick 6b4bdd2 hdpi slides banner
+pick c2997c6 text alignment
+pick bac187f request fullscreen on documentElement instead of body
+
+# Rebase 3d49b1d..bac187f onto 3d49b1d
+#
+# Commands:
+#  p, pick = use commit
+#  r, reword = use commit, but edit the commit message
+#  e, edit = use commit, but stop for amending
+#  s, squash = use commit, but meld into previous commit
+#  f, fixup = like "squash", but discard this commit's log message
+#  x, exec = run command (the rest of the line) using shell</code></pre></p>
+                    <aside class="notes">This file allows you to re-word commit messages, reorder commits, squash several commits into one etc.</aside>
+                    </section>
+
                 </section>
                 <section>
                     <section>
@@ -315,6 +355,24 @@ git push origin feature/my-feature
                     <section>
                         <h1>Fix stuff before pushing</h1>
                         <p>Before you submit a Pull Request, fix your local branch so everything looks good.</p>
+                        <p class="fragment">This is where you do an interactive rebase of your own branch.</p>
+                    </section>
+                    <section>
+                        <h1>Final tips</h1>
+                        <p>
+                            If you're completely new to git, go through this tutorial: https://try.github.io<br />
+                        </p>
+                    </section>
+                    <section>
+                        <p>Git never loses data! If something has been committed and you think you've messed up and lost it, fear not!</p>
+                        <p>Look up <blockquote>git reflog</blockquote> to find your rescue!
+                    </section>
+                    <section>
+                        <p>If you really feel stuck, see if your problem is described at http://ohshitgit.com</p>
+                        <p class="fragment">Or just ask for help!</p>
+                    </section>
+                    <section>
+                        <h1>The End!</h1>
                     </section>
                     <section data-background="images/GitIntro/questions.jpg">
                     </section>
