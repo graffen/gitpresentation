@@ -88,11 +88,12 @@
 
                 <section>
                     <h2>Local Version Control Systems</h2>
-                    <p class="fragment">
+                    <p>
                         <img src="images/GitIntro/local-vcs.png" width="50%" />
                     </p>
                     <aside class="notes" data-markdown>
 * rcs (still found preinstalled on modern MACs etc.)
+* Cannot be used over the network
                     </aside>
                 </section>
                 <section>
@@ -100,7 +101,7 @@
                     <p class="fragment"><img src="images/GitIntro/local-vcs-folders.png" /></p>
                     <aside class="notes" data-markdown>
 * Local directories (- timestamped if you're clever)
-But what if we want to collaborate with other developers?
+* But what if we want to collaborate with other developers?
                     </aside>
                 </section>
                 <section>
@@ -206,7 +207,7 @@ The major difference between Git and any other VCS (Subversion and friends inclu
 commit 82bc0d42140bd857bcee94380d35ba680ac357f3
 Author: Jesper Hess Nielsen &lt;jesper@graffen.dk&gt;
 Date:   Tue Apr 1 08:49:33 2014 +0200
-    Added two missing SIM WebConnect servers</code></pre>
+    Add two missing SIM WebConnect servers</code></pre>
                         </li>
                     </ul>
                     <aside class="notes" data-markdown>
@@ -230,11 +231,7 @@ Date:   Tue Apr 1 08:49:33 2014 +0200
                     <h2>Git is extremely effective on storage</h2>
                     <aside class="notes" data-markdown>
 Example:
-A fresh git repo containing WT 2.127 is 140 MB.
-The checked out working directory is 593 MB.
-
-Another example:
-The current Linux kernel repository, including the entire history, is half the size of the current checkout.
+The current Linux kernel repository, including the entire history 10 years back is only three times the size of its current checked-out working directory.
                     </aside>
                 </section>
 
@@ -556,7 +553,7 @@ We must run _git add_ again to stage the latest version of the file.
                     <p class="fragment">So let's commit our changes.</p>
                     <p>
                         <pre class="fragment"><code data-trim class="no-highlight">
-> git commit -m"Reworded the headline in README.md and added howto.txt"
+> git commit
 [master 39f41db] Reworded the headline in README.md and added howto.txt
  2 files changed, 2 insertions(+), 1 deletion(-)
  create mode 100644 howto.txt
@@ -564,7 +561,7 @@ We must run _git add_ again to stage the latest version of the file.
                     </p>
                     <aside class="notes">
                         <ul>
-                            <li>Run git add on our modified file to add it to the snapshot</li>
+                            <li>Run git add on our modified file to add it to the index</li>
                             <li>Run git commit</li>
                             <li>Git requires you to enter commit messages when committing code.</li>
                         </ul>
@@ -578,7 +575,7 @@ We must run _git add_ again to stage the latest version of the file.
 commit 39f41db15e8a567a545653423dd97c857addcfca
 Author: Jesper Hess Nielsen &lt;jesper@graffen.dk>
 Date:   Fri May 2 14:06:32 2014 +0200
-    Reworded the headline in README.md and added howto.txt
+    Reword the headline in README.md and add howto.txt
 commit 824d7876f0c5b792220d1ae33b0dff2486b79283
 Author: Mads Kristensen &lt;post@madskristensen.net>
 Date:   Fri Apr 25 08:29:42 2014 -0700
@@ -755,10 +752,10 @@ Let's make a few more changes and commit again.
 I could have dozens or even hundreds of branches in my repo without anyone ever knowing about them. 
 It's only if I explicitly choose to push my branches upstream that they become available to others. 
   
-Note that branches all live _inside_ the repo. You won't see thousands of clones of the codebase on the server.
+Note that branches all live _inside_ the repo. You won't see multiple copies of the codebase on your machine.
                     </aside>
                 </section>                
-                <section>
+                <!--<section> 
                     <h2>Advanced topics for another time</h2>
                     <p>
                         <ul>
@@ -777,11 +774,137 @@ Note that branches all live _inside_ the repo. You won't see thousands of clones
 * Interactive commits allow us to build very neat history timelines
 * The reflog is the git repos own version control. It can help us if we screw up badly.
                     </aside>
-                </section>
+                </section>-->
             </section>
             <section>
                 <section>
                     <h1>Part 4</h1>
+                    <h2>Merging and Rebasing</h2>
+                </section>
+                <section>
+                    <h1>Basic brancing</h1>
+                    <img src="images/GitIntro/basicbranching/basic-branching-1.png" width="80%" />
+                    <aside class="notes" data-markdown>
+Let's say you’re working on your project and have a couple of commits already.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Let's work on an issue!</h2>
+                    <p>
+                        <pre><code data-trim class="no-highlight">$ git checkout -b iss53
+Switched to a new branch "iss53"</code></pre>
+                    </p>
+                    <img src="images/GitIntro/basicbranching/basic-branching-2.png" alt="" width="80%">
+                    <aside class="notes" data-markdown>
+You’ve decided that you’re going to work on issue #53 in whatever issue-tracking system your company uses. 
+To create a branch and switch to it at the same time, you can run the git checkout command with the -b switch:</aside>
+                </section>
+                <section>
+                    <h1>Do work...</h1>
+                    <img src="images/GitIntro/basicbranching/basic-branching-3.png" alt="" width="80%">
+                    <aside class="notes" data-markdown>
+You get a call about issue with live site. You don't have to worry about deploying the changes in iss53.
+Simply switch back to your master branch.  
+But first! Make sure you have a clean working directory!.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Checkout and fix issue</h2>
+                    <pre class="fragment"><code data-trim class="no-highlight">
+$ git checkout master
+Switched to branch 'master'</code></pre>
+                    <pre class="fragment"><code data-trim class="no-highlight">
+$ git checkout -b hotfix
+Switched to a new branch 'hotfix'
+$ vim index.html
+$ git commit -a -m 'Fix the broken email address'
+[hotfix 1fb7853] fixed the broken email address
+ 1 file changed, 2 insertions(+)</code></pre>
+                    <aside class="notes" data-markdown>
+Working dir is now exactly the same  as before starting work on issue 53.  
+Git resets your woring dir to look like it did the last time you committed on the branch.  
+Now we have a hotfix to make. Let's create a hotfix branch to work on.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Hotfix branch based on master</h2>
+                    <img src="images/GitIntro/basicbranching/basic-branching-4.png" alt="" width="80%">
+                    <aside class="notes" data-markdown>
+Now make sure your tests run and the hotfix is what we want and merge it back to master to deploy to production.  
+You do this with the merge command.</aside>
+                </section>
+                <section>
+                    <h2>Merge!</h2>
+                    <pre><code data-trim class="no-highlight">
+$ git checkout master
+$ git merge hotfix
+Updating f42c576..3a0874c
+Fast-forward
+ index.html | 2 ++
+ 1 file changed, 2 insertions(+)
+ </code></pre>
+                    
+                </section>
+                <section>
+                    <h2>The fast-forward merge</h2>
+                    <img src="images/GitIntro/basicbranching/basic-branching-5.png" alt="" width="80%">
+                    <aside class="notes" data-markdown>
+* Explain fast-forward and moving pointers when commits are directly ahead.
+* Our change is now in the snapshot of the commit pointed to by the master branch and is ready to deploy.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Now clean up and switch back</h2>
+                    <pre class="fragment"><code data-trim class="no-highlight">
+$ git branch -d hotfix
+Deleted branch hotfix (3a0874c).</code></pre>
+                    <pre class="fragment"><code class="no-highlight" data-trim>
+$ git checkout iss53
+Switched to branch "iss53"
+$ vim index.html
+$ git commit -a -m 'finish the new footer [issue 53]'
+[iss53 ad82d7a] finish the new footer [issue 53]
+1 file changed, 1 insertion(+)
+</code></pre>
+                </section>
+                <section>
+                    <h2>Work continues on iss53</h2>
+                    <img src="images/GitIntro/basicbranching/basic-branching-6.png" alt="" width="80%">
+                    <aside class="notes" data-markdown>
+It’s worth noting here that the work you did in your hotfix branch is not contained in the files in your iss53 branch. If you need to pull it in, you can merge your master branch into your iss53 branch by running git merge master, or you can wait to integrate those changes until you decide to pull the iss53 branch back into master later.
+                    </aside>
+                </section>
+                <section>
+                    <h1>Basic Merging</h1>
+                    <pre><code class="no-highlight" data-trim>
+$ git checkout master
+Switched to branch 'master'
+$ git merge iss53
+Merge made by the 'recursive' strategy.
+index.html |    1 +
+1 file changed, 1 insertion(+)
+</code></pre>
+                </section>
+                <section>
+                    <h2>Snapshots used in a typical merge</h2>
+                    <img src="images/GitIntro/basicbranching/basic-merging-1.png" alt="" width="80%">
+                    <aside class="notes" data-markdown>
+Because work has diverged, Git has to do a three-way merge using the two snapshots pointed to by the branch tips and the common ancestor of the two.
+                    </aside>
+
+                </section>
+                <section>
+                    <h2>The merge commit</h2>
+                    <img src="images/GitIntro/basicbranching/basic-merging-2.png" alt="" width="80%">
+                    <aside class="notes" data-markdown>
+Instead of just moving the branch pointer forward, Git creates a new snapshot that results from this three-way merge and automatically creates a new commit that points to it. This is referred to as a merge commit, and is special in that it has more than one parent.
+                    </aside>
+                </section>
+
+            </section>
+            <section>
+                <section>
+                    <h1>Part 5</h1>
                     <h2>Git workflows</h2>
                 </section>
                 <section>
@@ -1020,10 +1143,10 @@ You can now host git repositories natively in TFS. No more "hacking" to get git 
 			// Full list of configuration options available at:
 			// https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
-				controls: false,
-				progress: false,
-				history: false,
-                keyboard: false,
+				controls: true,
+				progress: true,
+				history: true,
+                keyboard: true,
 				center: true,
 
 				transition: 'slide', // none/fade/slide/convex/concave/zoom
@@ -1036,7 +1159,8 @@ You can now host git repositories natively in TFS. No more "hacking" to get git 
 				//Optional reveal.js plugins
 				dependencies: [
                     { src: 'https://cdn.socket.io/socket.io-1.3.5.js', async: true },
-                    { src: 'plugin/multiplex/client.js', async: true },
+                    //{ src: 'plugin/multiplex/client.js', async: true },
+                    { src: 'plugin/notes/notes.js', async: true },
 					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
 					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
