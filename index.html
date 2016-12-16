@@ -50,10 +50,9 @@
                         <li class="fragment">What is git?</li>
                         <li class="fragment">Getting started</li>
                         <li class="fragment">Git basics</li>
-                        <li class="fragment">Git branching</li>
+                        <li class="fragment">Git branching, mergin rebasing</li>
                         <li class="fragment">Git workflows</li>
-                        <li class="fragment">Git &amp; TFS</li>
-                        <li class="fragment">Open Discussion</li>
+                        <li class="fragment">Demo/Hands-on</li>
                     </ul>
                 </p>
             </section>
@@ -779,7 +778,7 @@ Note that branches all live _inside_ the repo. You won't see multiple copies of 
             <section>
                 <section>
                     <h1>Part 4</h1>
-                    <h2>Merging and Rebasing</h2>
+                    <h2>Merging</h2>
                 </section>
                 <section>
                     <h1>Basic brancing</h1>
@@ -900,11 +899,51 @@ Because work has diverged, Git has to do a three-way merge using the two snapsho
 Instead of just moving the branch pointer forward, Git creates a new snapshot that results from this three-way merge and automatically creates a new commit that points to it. This is referred to as a merge commit, and is special in that it has more than one parent.
                     </aside>
                 </section>
-
+                <section>
+                    <h1>Branch management</h1>
+                </section>
+                <section>
+                    <h1>List branches</h1>
+                    <pre><code class="no-highlight" data-trim>$ git branch
+  iss53
+* master
+  testing</code></pre>
+                <aside class="notes" data-markdown>
+git branch with no arguments gives a simple list of your current branches.  
+Notice the * character that indicates the branch you currently have checked out (where HEAD points to)</aside>
+                </section>
+                <section>
+                    <h1>List branches</h1>
+                    <h4>(verbose)</h4>
+                    <pre><code data-trim>$ git branch -v
+  iss53   93b412c fix javascript issue
+* master  7a98805 Merge branch 'iss53'
+  testing 782fd34 add scott to the author list in the readmes</code></pre>
+                    <aside class="notes" data-markdown>
+The -v switch shows the last commit on each branch.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Is my branch merged?</h2>
+                    <pre class="fragment"><code class="no-highlight" data-trim>$ git branch --merged
+  iss53
+* master</code>Lists branches that have been integrated into your current branch.</pre>
+                    <pre class="fragment"><code class="no-highlight" data-trim>$ git branch --no-merged
+  testing</code>Lists branches that have <em>not yet</em> been integrated into your current branch.</pre>
+                    <aside class="notes" data-markdown>
+--merged and --no-merged options can filter this list to branches that you have or have not yet merged into the branch you’re currently on.
+                    </aside>
+                </section>
             </section>
             <section>
                 <section>
                     <h1>Part 5</h1>
+                    <h2>Rebasing</h2>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <h1>Part 6</h1>
                     <h2>Git workflows</h2>
                 </section>
                 <section>
@@ -961,15 +1000,14 @@ Instead of just moving the branch pointer forward, Git creates a new snapshot th
                 <section>
                     <h2>Tooling Support</h2>
                     <ul>
-                        <li>VS has supported git natively since VS 2012 update 2</li>
-                        <li>TFS supports git repos on the server since TFS 2013</li>
-                        <li>TFS 2013 update 4 includes <em>rudimentary</em> pull-request support</li>
+                        <li class="fragment">VS has supported git natively since VS 2012 update 2</li>
+                        <li class="fragment">TFS supports git repos on the server since TFS 2013</li>
+                        <li class="fragment">TFS supports repo-local pull requests quite well!</li>
+                        <li class="fragment">Pretty good integration with work items etc.</li>
                     </ul>
                     <aside class="notes" data-markdown>
-You can connect your VS to local git repos and work from the Team Explorer to do most day-to-day stuff.
-You can now host git repositories natively in TFS. No more "hacking" to get git & TFS to work
+* Visual Studio has a built-in Git client but I personally don't like it a lot. It tries to hide too many central concepts, making Git seem "magical" to the user. 
 
-* This means no more use for git-tf & other funny ways of working. Unless you're stuck with the old TFS source control.
 * Rumors have it that Microsoft is considering switching to git completely as the default TFS source control.
                     </aside>
                 </section>
@@ -1078,30 +1116,6 @@ You can now host git repositories natively in TFS. No more "hacking" to get git 
 * Time to show how it works
                     </aside>
                 </section>
-
-                <section>
-                    <h1>Summary</h1>
-                </section>
-
-                <section>
-                    <h2>Git is a first-class citizen inside TFS</h2>
-                    <aside class="notes" data-markdown>
-* TFS team is working to make the git experience comparable to the one we know and "love" from TFS.
-* My work etc.
-* Pull request workflow (only web-based for now) is available in latest update 4 of TFS server.
-                    </aside>
-                </section>
-                <section data-markdown>
-                    <script type="text/template">
-## Obstacles in the organsiation ##
-- TFS is "controlled" by the ALM team <!-- .element: class="fragment" -->
-- TFS is still the official SCM inside Saxo Bank. <!-- .element: class="fragment" -->
-- This means we as developers can't simply create repos as needed <!-- .element: class="fragment" -->
-	- Instead we need to ask to have them created. 
-- There is a definite learning curve to take into account. It's a completely different beast to what most of us are used to. <!-- .element: class="fragment" -->
-                    </script>
-                </section>
-            </section>
             <section>
                 <h1>Discussion time!</h1>
             </section>
