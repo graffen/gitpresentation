@@ -934,11 +934,36 @@ The -v switch shows the last commit on each branch.
 --merged and --no-merged options can filter this list to branches that you have or have not yet merged into the branch you’re currently on.
                     </aside>
                 </section>
+                <section>
+                    <h1>Collaborating with others</h1>
+                </section>                
             </section>
             <section>
                 <section>
                     <h1>Part 5</h1>
                     <h2>Rebasing</h2>
+                    <aside class="notes" data-markdown>
+                        In Git, there are two main ways to integrate changes from one branch into another: the merge and the rebase. 
+                        In this section you’ll learn what rebasing is, how to do it, why it’s a pretty amazing tool, and in what cases you won’t want to use it.
+                    </aside>
+                </section>
+                <section>
+                    <h2>The basic rebase</h2>
+                    <h3>- a quick recap</h3>
+                    <img src="images/rebasing/basic-rebase-1.png" width="80%" />
+                    <aside class="notes" data-markdown>
+                    If we look at our merge example, we remember that we diverged our work and made commits on two different branches. 
+                    </aside>
+                </section>
+                <section>
+                    <h2>The basic rebase</h2> 
+                    <img src="images/rebasing/basic-rebase-2.png" width="80%" />
+                    <aside class="notes" data-markdown>
+                    The easiest way to integrate the branches, as we’ve already covered, is the merge command. It performs a three-way merge between the two latest branch snapshots (C3 and C4) and the most recent common ancestor of the two (C2), creating a new snapshot (and commit).
+                    </aside>
+                </section>
+                <section>
+                    
                 </section>
             </section>
             <section>
@@ -988,7 +1013,6 @@ The -v switch shows the last commit on each branch.
                         </ol>
                     </aside>
                 </section>
-
             </section>
 
             <section>
