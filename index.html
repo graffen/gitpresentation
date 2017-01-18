@@ -216,7 +216,10 @@ Date:   Tue Apr 1 08:49:33 2014 +0200
 * Will get back to what objects are a bit later
                     </aside>
                 </section>
-
+                <section>
+                <h2>Integrity is important!</h2>
+                <p>It means we can trust Git 100% to deliver the correct bytes to us.</p>
+                </section>
                 <section>
                     <h2>Git generally only adds data</h2>
                     <aside class="notes" data-markdown>
@@ -950,20 +953,131 @@ The -v switch shows the last commit on each branch.
                 <section>
                     <h2>The basic rebase</h2>
                     <h3>- a quick recap</h3>
-                    <img src="images/rebasing/basic-rebase-1.png" width="80%" />
+                    <img src="images/GitIntro/rebasing/basic-rebase-1.png" width="80%" />
                     <aside class="notes" data-markdown>
                     If we look at our merge example, we remember that we diverged our work and made commits on two different branches. 
                     </aside>
                 </section>
                 <section>
-                    <h2>The basic rebase</h2> 
-                    <img src="images/rebasing/basic-rebase-2.png" width="80%" />
+                    <h2>Three-way merge</h2> 
+                    <img src="images/GitIntro/rebasing/basic-rebase-2.png" width="80%" />
                     <aside class="notes" data-markdown>
                     The easiest way to integrate the branches, as we’ve already covered, is the merge command. It performs a three-way merge between the two latest branch snapshots (C3 and C4) and the most recent common ancestor of the two (C2), creating a new snapshot (and commit).
                     </aside>
                 </section>
                 <section>
-                    
+                    <h2>But there's also another way</h2>
+                    <p>You can apply the <em>patch</em> of the change C4 and reapply it on top of C3</p>
+                    <pre><code class="no-highlight" data-trim>
+$ git checkout experiment
+$ git rebase master
+First, rewinding head to replay your work on top of it...
+Applying: added staged command
+</code></pre>
+                </section>
+                <section>
+                    <h2>This is how it looks now</h2>
+                    <img src="images/GitIntro/rebasing/basic-rebase-3.png" width="80%" />
+                    <aside class="notes">It works by going to the common ancestor of the two branches (the one you’re on and the one you’re rebasing onto), getting the diff introduced by each commit of the branch you’re on, saving those diffs to temporary files, resetting the current branch to the same commit as the branch you are rebasing onto, and finally applying each change in turn.</aside>
+                </section>
+                <section>
+                    <h2>Now you can just fast-forward master</h2>
+                    <pre><code class="no-highlight" data-trim>
+$ git checkout master
+$ git merge experiment</code></pre>
+                    <img src="images/GitIntro/rebasing/basic-rebase-4.png" class="fragment" />
+                    <p class="fragment">See how neat our history looks now?</p>
+                </section>
+                <section>
+                    <h2>A more interesting example</h2>
+                    <img src="images/GitIntro/rebasing/interesting-rebase-1.png" />
+                    <aside class="notes">You branched a topic branch (server) to add some server-side functionality to your project, and made a commit. Then, you branched off that to make the client-side changes (client) and committed a few times. Finally, you went back to your server branch and did a few more commits.</aside>
+                </section>
+                <section>
+                    <h2>Prepare client-side for release</h2>
+                    <pre><code class="no-highlight" data-trim>$ git rebase --onto master server client</code></pre>
+                    <img src="images/GitIntro/rebasing/interesting-rebase-2.png" class="fragment"/>
+                    <aside class="notes">You can take the changes on client that aren’t on server (C8 and C9) and replay them on your master branch by using the --onto option of git rebase.
+                    This basically says, “Check out the client branch, figure out the patches from the common ancestor of the client and server branches, and then replay them onto master.” It’s a bit complex, but the result is pretty cool.</aside>
+                </section>
+                <section>
+                    <h2>Fast-forward master</h2>
+                    <pre><code class="no-highlight" data-trim>
+$ git checkout master
+$ git merge client</code></pre>
+                    <img src="images/GitIntro/rebasing/interesting-rebase-3.png" />
+                </section>
+                <section>
+                    <h2>Now to integrate the 'server' branch</h2>
+                    <pre><code class="no-highlight" data-trim>$ git rebase master server</code></pre>
+                    <img class="fragment" src="images/GitIntro/rebasing/interesting-rebase-4.png" />
+                    <aside class="notes">Let’s say you decide to pull in your server branch as well. You can rebase the server branch onto the master branch without having to check it out first by running git rebase [basebranch] [topicbranch] – which checks out the topic branch (in this case, server) for you and replays it onto the base branch (master):
+                </section>
+                <section>
+                    <h2>Clean-up time</h2>
+                    <p>First, fast-forward as usual</p>
+                    <pre class="fragment"><code class="no-highlight" data-trim>
+$ git checkout master
+$ git merge server</code></pre>
+                    <p class="fragment">Then delete your topic branches</p>
+                    <pre class="fragment"><code class="no-highlight" data-trim>
+$ git branch -d client
+$ git branch -d server</code></pre>
+                <aside class="notes">All the work is integrated so we don't need the topic branches anymore.</aside>
+                </section>
+                <section>
+                    <h2>Final commit history</h2>
+                    <img src="images/GitIntro/rebasing/interesting-rebase-5.png" >
+                    <p>Neat and tidy, right?</p>
+                </section>
+                <section>
+                    <h2>The perils of Rebasing</h2>
+                </section>
+                <section>
+                    <h2>Never rebase commits that exist outside your repo!</h2>
+                    <aside class="notes">Rebasing abandons existing commits and creates new ones that are similar but different.
+                    If you push commits and others pull them down to work on them and then you rewrite them with git rebase and push them up again, your collaborators will have to re-merge, making things messy.</aside>
+                </section>
+                <section>
+                    <h2>An example of rebase hell</h2>
+                    <img src="images/GitIntro/rebasing/perils-of-rebasing-1.png" width="70%" />
+                    <p>You clone a remote repo and do some work on that</p>
+                    <aside class="notes">Let’s look at an example of how rebasing work that you’ve made public can cause problems. Suppose you clone from a central server and then do some work off that. Your commit history looks like this</aside>
+                </section>
+                <section>
+                    <h2>Your teammate keeps working and pushing code</h2>
+                    <img src="images/GitIntro/rebasing/perils-of-rebasing-2.png" width="70%" />
+                    <p>He pushes some commits that include a merge</p>
+                    <aside class="notes">Now, someone else does more work that includes a merge, and pushes that work to the central server. You fetch it and merge the new remote branch into your work, making your history look something like this</aside>
+                </section>
+                <section>
+                    <h3>Teammate decides to rebase instead</h3>
+                    <p> - and does a git push --force to overwrite history on the server</p>
+                    <img src="images/GitIntro/rebasing/perils-of-rebasing-3.png" width="70%"/>
+                    <aside class="notes">You then fetch from that server, bringing down the new commits. Your history now looks like this.</aside>
+                </section>
+                <section>
+                    <h3>If you pull now, you're in a pickle</h3>
+                    <img src="images/GitIntro/rebasing/perils-of-rebasing-4.png" width="70%"/>
+                    <aside class="notes">Now you’re both in a pickle. If you do a git pull, you’ll create a merge commit which includes both lines of history, and your repository will look like this. 
+                    Git log will show you two commits with the same author, date and message which is confusing. If you push now you'll push all these commits up, increasing confusion.
+                    </aside>
+                </section>
+                <section>
+                    <h2>The solution/fix to this problem</h2>
+                    <p>git pull --rebase</p>
+                    <p>Rebases your local changes onto remote changes</p>
+                </section>
+                <section>
+                    <h2>So instead of this</h2>
+                    <img src="images/GitIntro/rebasing/perils-of-rebasing-4.png" width="70%"/>
+                </section>
+                <section>
+                    <h2>We get this</h2>
+                    <img src="images/GitIntro/rebasing/perils-of-rebasing-5.png" width="70%"/>
+                    <aside class="notes">It turns out that in addition to the commit SHA-1 checksum, Git also calculates a checksum that is based just on the patch introduced with the commit. This is called a “patch-id”.<br /><br />
+
+If you pull down work that was rewritten and rebase it on top of the new commits from your partner, Git can often successfully figure out what is uniquely yours and apply them back on top of the new branch.</aside>
                 </section>
             </section>
             <section>
@@ -988,7 +1102,7 @@ The -v switch shows the last commit on each branch.
                         This is basically how the Pull Request workflow in GitHub works.
                         <ol>
                             <li>The project maintainer pushes to their public repository.</li>
-                            <li>A contributor clones that repository and makes changes.</li>
+                            <li>A contributor forks that repository, clones it and makes changes.</li>
                             <li>The contributor pushes to their own public copy or "fork"</li>
                             <li>The contributor sends the maintainer an e-mail asking them to pull changes
                             (or presses the Pull Request button)</li>
