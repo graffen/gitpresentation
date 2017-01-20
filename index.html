@@ -276,7 +276,18 @@ Linux source code, ~575.000 comits, by literally thousands of developers working
 * Try not to use the phrase "checked in". The Checkin concept doesn't exist in Git.
                     </aside>
                 </section>
+                <section>
+                    <h2>From one state to the next</h2>
+                    <img src="images/GitIntro/filestatuslifetime.png" width="80%" />
+                    <aside class="notes" data-markdown>
+Remember the three states from earlier?
 
+* modified
+* staged
+* committed
+* untracked
+                    </aside>
+                </section>
 
                 <section>
                     <h2>A basic git workflow</h2>
@@ -394,7 +405,7 @@ Checking connectivity... done
                     <h2>Protocol support</h2>
                     <p>
                         <ul>
-                            <li>Local filesystem</li>
+                            <li>Local filesystem (duh!)</li>
                             <li>SMB (\\servername\share\repository)</li>
                             <li>HTTP(s)</li>
                             <li>SSH</li>
@@ -403,194 +414,9 @@ Checking connectivity... done
                     </p>
                 </section>
                 <section>
-                    <h2>Working with the repo</h2>
-                    <aside class="notes">
-We now have our repo cloned and a checkout or working copy of the files. <br />
-                    </aside>
-                </section>
-
-                <section>
-                    <h2>Files can exist in one of several states</h2>
-                    <img src="images/GitIntro/filestatuslifetime.png" width="80%" />
-                    <aside class="notes" data-markdown>
-Remember the three states from earlier?
-
-* modified
-* staged
-* committed
-* untracked
-                    </aside>
-                </section>
-                <section>
-                    <h2>Checking the status of your files</h2>
-                    <p>
-                        <pre><code data-trim class="no-highlight">
-> git status
-# On branch master
-nothing to commit, working directory clean</code></pre>
-                    </p>
-                </section>
-                <section>
-                    <h2>Tracking new files</h2>
-                    <p>
-                        <pre class="fragment"><code data-trim class="no-highlight">
-> git status
-# On branch master
-# Untracked files:
-#   (use "git add &lt;file&gt;..." to include in what will be committed)
-#
-#       howto.txt
-nothing added to commit but untracked files present (use "git add" to track)
-</code></pre>
-                    </p>
-                    <p>
-                        <pre class="fragment"><code data-trim class="no-highlight">
-> git add howto.txt
-> git status
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD &lt;file&gt;..." to unstage)
-#
-#       new file:   howto.txt
-</code></pre>
-                    </p>
-                    <aside class="notes" data-markdown>
-First we add a new file in the working directory.
-Then run git status to see that git has seen the file but hasn't been told to do anything about it just yet.
-
-Run _git add_
-
-We can now go ahead and commit that file to the repository.
-                    </aside>
-                </section>
-                <section>
-                    <h2>Staging modified files</h2>
-                    <p>
-                        <pre class="fragment"><code data-trim class="no-highlight">
-> git status
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD &lt;file&gt;..." to unstage)
-#
-#       new file:   howto.txt
-#
-# Changes not staged for commit:
-#   (use "git add &lt;file>..." to update what will be committed)
-#   (use "git checkout -- &lt;file>..." to discard changes in working directory)
-#
-#       modified:   README.md
-#
-</code></pre>
-                    </p>
-                    <p>
-                        <pre class="fragment"><code data-trim class="no-highlight">
-> git add README.md
-> git status
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD &lt;file&gt;..." to unstage)
-#
-#       modified:   README.md
-#       new file:   howto.txt
-#
-</code></pre>
-                    </p>
-                    <aside class="notes" data-markdown>
-Let's change a file that was already tracked<br />
-Add the word "awesome" to README.md &amp; run git status again.
-
-Then run _git add_ & _git status_ again.
-                    </aside>
-                </section>
-                <section>
-                    <h3>More staging</h3>
-                    <p>
-                        <pre class="fragment"><code data-trim class="no-highlight">
-> notepad howto.txt
-> git status
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD &gt;file>..." to unstage)
-#
-#       modified:   README.md
-#       new file:   howto.txt
-#
-# Changes not staged for commit:
-#   (use "git add &gt;file>..." to update what will be committed)
-#   (use "git checkout -- &gt;file>..." to discard changes in working directory)
-#
-#       modified:   howto.txt
-#
-</code></pre>
-                    </p>
-                    <p class="fragment">What? Now <em>howto.txt</em> is both staged and unstaged?</p>
-
-                    <aside class="notes" data-markdown>
-What if we change a file that's already staged?
-
-The staging area is the key here. We need to re-add the modified file to the staging area.
-If we commit now, git will commit exactly as howto.txt looked when we staged it with _git add_.
-
-We must run _git add_ again to stage the latest version of the file.
-                    </aside>
-                </section>
-                <section>
-                    <h2>Our snapshot is ready</h2>
-                    <p>
-                        <pre class="fragment"><code data-trim class="no-highlight">
-> git add howto.txt
-> git status
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD &lt;file>..." to unstage)
-#
-#       modified:   README.md
-#       new file:   howto.txt
-#
-</code></pre>
-                    </p>
-                    <p class="fragment">So let's commit our changes.</p>
-                    <p>
-                        <pre class="fragment"><code data-trim class="no-highlight">
-> git commit
-[master 39f41db] Reworded the headline in README.md and added howto.txt
- 2 files changed, 2 insertions(+), 1 deletion(-)
- create mode 100644 howto.txt
-</code></pre>
-                    </p>
-                    <aside class="notes">
-                        <ul>
-                            <li>Run git add on our modified file to add it to the index</li>
-                            <li>Run git commit</li>
-                            <li>Git requires you to enter commit messages when committing code.</li>
-                        </ul>
-                    </aside>
-                </section>
-                <section>
-                    <h2>Reviewing our history</h2>
-                    <p>
-                        <pre class="fragment"><code data-trim class="no-highlight">
-> git log
-commit 39f41db15e8a567a545653423dd97c857addcfca
-Author: Jesper Hess Nielsen &lt;jesper@graffen.dk>
-Date:   Fri May 2 14:06:32 2014 +0200
-    Reword the headline in README.md and add howto.txt
-commit 824d7876f0c5b792220d1ae33b0dff2486b79283
-Author: Mads Kristensen &lt;post@madskristensen.net>
-Date:   Fri Apr 25 08:29:42 2014 -0700
-    Redirect to login page from email links
-...
-...
-</code></pre>
-                    </p>
-                    <aside class="notes">
-                        Once things are committed we can go back and view the commit history.<br />
-                        Notice how every commit is referenced by a SHA-1 hash. <br />
-                        Mention gitk (or show in demo)
-                    </aside>
+                    <h1>Demo</h1>
                 </section>
             </section>
-
             <section>
                 <section>
                     <h1>Part 3</h1>
@@ -753,26 +579,6 @@ It's only if I explicitly choose to push my branches upstream that they become a
 Note that branches all live _inside_ the repo. You won't see multiple copies of the codebase on your machine.
                     </aside>
                 </section>                
-                <!--<section> 
-                    <h2>Advanced topics for another time</h2>
-                    <p>
-                        <ul>
-                            <li>Merging and branching strategies</li>
-                            <li>Rebasing & rewriting history</li>
-                            <li>git bisect</li>
-                            <li>Interactive commits & cherry picking</li>
-                            <li>The reflog</li>
-                        </ul>
-                    </p>
-                    <aside class="notes" data-markdown>
-* Because of time constraints we won't go through these now
-* Merging in Git is less painful because Git keeps track of the common merge-base through tracking ancestors.
-* Rebase allows us to keep our history neat and tidy by minimizing "merge commits"
-* git bisect helps to find the exact commit when a bug was introduced
-* Interactive commits allow us to build very neat history timelines
-* The reflog is the git repos own version control. It can help us if we screw up badly.
-                    </aside>
-                </section>-->
             </section>
             <section>
                 <section>
@@ -780,8 +586,9 @@ Note that branches all live _inside_ the repo. You won't see multiple copies of 
                     <h2>Merging</h2>
                 </section>
                 <section>
-                    <h1>Basic brancing</h1>
-                    <img src="images/GitIntro/basicbranching/basic-branching-1.png" width="80%" />
+                    <h1>Basic branching</h1>
+                    <h3>(a quick recap)</h3>
+                    <img class="fragment" src="images/GitIntro/basicbranching/basic-branching-1.png" width="80%" />
                     <aside class="notes" data-markdown>
 Let's say you’re working on your project and have a couple of commits already.
                     </aside>
@@ -789,39 +596,44 @@ Let's say you’re working on your project and have a couple of commits already.
                 <section>
                     <h2>Let's work on an issue!</h2>
                     <p>
-                        <pre><code data-trim class="no-highlight">$ git checkout -b iss53
+                        <pre><code data-trim class="bash">$ git checkout -b iss53
 Switched to a new branch "iss53"</code></pre>
                     </p>
-                    <img src="images/GitIntro/basicbranching/basic-branching-2.png" alt="" width="80%">
+                    <img class="fragment" src="images/GitIntro/basicbranching/basic-branching-2.png" alt="" width="80%">
                     <aside class="notes" data-markdown>
 You’ve decided that you’re going to work on issue #53 in whatever issue-tracking system your company uses. 
-To create a branch and switch to it at the same time, you can run the git checkout command with the -b switch:</aside>
+To create a branch and switch to it at the same time, you can run the git checkout command with the -b switch. HEAD now points at iss53.</aside>
                 </section>
                 <section>
-                    <h1>Do work...</h1>
-                    <img src="images/GitIntro/basicbranching/basic-branching-3.png" alt="" width="80%">
+                    <h1>Disaster strikes!</h1>
+                    <h3>(not really, we've got a safety net)<h3>
+                    <img class="fragment" src="images/GitIntro/basicbranching/basic-branching-3.png" alt="" width="80%">
                     <aside class="notes" data-markdown>
-You get a call about issue with live site. You don't have to worry about deploying the changes in iss53.
+You've done some work and then you get a call about issue with live site. You don't have to worry about deploying the changes in iss53.
 Simply switch back to your master branch.  
 But first! Make sure you have a clean working directory!.
                     </aside>
                 </section>
                 <section>
-                    <h2>Checkout and fix issue</h2>
-                    <pre class="fragment"><code data-trim class="no-highlight">
+                    <h2>Hotfix time!</h2>
+                    <pre class="fragment"><code data-trim class="bash">
 $ git checkout master
 Switched to branch 'master'</code></pre>
-                    <pre class="fragment"><code data-trim class="no-highlight">
+                    <pre class="fragment"><code data-trim class="bash">
 $ git checkout -b hotfix
 Switched to a new branch 'hotfix'
-$ vim index.html
+$ notepad index.html
+
+(... fix problem ...)
+
 $ git commit -a -m 'Fix the broken email address'
 [hotfix 1fb7853] fixed the broken email address
  1 file changed, 2 insertions(+)</code></pre>
                     <aside class="notes" data-markdown>
-Working dir is now exactly the same  as before starting work on issue 53.  
-Git resets your woring dir to look like it did the last time you committed on the branch.  
-Now we have a hotfix to make. Let's create a hotfix branch to work on.
+- First checkout master
+- Working dir is now exactly the same  as before starting work on issue 53.  
+- Git resets your working dir to look like it did the last time you committed on the branch.  
+- Since we have to make a hotfix let's create a hotfix branch to work on.
                     </aside>
                 </section>
                 <section>
