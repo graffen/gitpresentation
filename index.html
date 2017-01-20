@@ -50,20 +50,20 @@
                         <li class="fragment">What is git?</li>
                         <li class="fragment">Getting started</li>
                         <li class="fragment">Git basics</li>
-                        <li class="fragment">Git branching, mergin rebasing</li>
+                        <li class="fragment">Git branching, merging & rebasing</li>
                         <li class="fragment">Git workflows</li>
-                        <li class="fragment">Demo/Hands-on</li>
+                        <li class="fragment">Demo/Hands-on <br /><small>(we probably won't have time for this today)</small></li>
                     </ul>
                 </p>
             </section>
             <section>
                 <h1>What is git?</h1>
-                <p>Git is a <span style="color: red">free</span> and <span style="color: orange;">open source</span> distributed <span style="color: yellow;">version control system</span> designed to handle everything from <span style="color: yellow">small</span> to <span style="color: red">very large</span> projects with <span style="color: fuchsia">speed</span> and <span style="color: orangered">efficiency</span>.</p>
+                <p>Git is a <span style="color: red">free</span> and <span style="color: orange;">open source</span> <b>distributed</b> <span style="color: yellow;">version control system</span> designed to handle everything from <span style="color: yellow">small</span> to <span style="color: red">very large</span> projects with <span style="color: fuchsia">speed</span> and <span style="color: orangered">efficiency</span>.</p>
             </section>
 
             <section>
                 <h1>Why git?</h1>
-                <h2> - a bit of history</h2>
+                <h2> - a short history lesson</h2>
                 <aside class="notes" data-markdown>
 * Created by Linus Torvalds in 2005 to replace BitKeeper
 * Goals were:
@@ -83,15 +83,17 @@
 
                 <section>
                     <h1>About Version Control</h1>
+                    <h2>(Going back to basics)</h2>
                 </section>
 
                 <section>
                     <h2>Local Version Control Systems</h2>
                     <p>
-                        <img src="images/GitIntro/local-vcs.png" width="50%" />
+                        <img class="fragment" src="images/GitIntro/local-vcs.png" width="50%" />
+                        <h3 class="fragment">Can't talk to the network</h3>
                     </p>
                     <aside class="notes" data-markdown>
-* rcs (still found preinstalled on modern MACs etc.)
+* rcs (still found preinstalled on modern Macs etc.)
 * Cannot be used over the network
                     </aside>
                 </section>
@@ -107,6 +109,7 @@
                     <h2>Centralized Version Control Systems</h2>
                     <p class="fragment roll-in">
                         <img src="images/GitIntro/centralized-vcs.png" width="50%" />
+                        <h3 class="fragment">Require network access!</h3>
                     </p>
                     <aside class="notes" data-markdown>
 * Collaborate with other devs
@@ -121,9 +124,10 @@
                 </section>
 
                 <section>
-                    <h2>Distributed Version Control Systems</h2>
+                    <h3>Distributed Version Control Systems</h3>
                     <p class="fragment roll-in">
                         <img src="images/GitIntro/distributed-vcs.png" width="40%" />
+                        <h3 class="fragment">Do not require network access</h3>
                     </p>
                     <aside class="notes" data-markdown>
 * Git, Mercurial, Bazaar, Darcs
@@ -175,7 +179,7 @@ The major difference between Git and any other VCS (Subversion and friends inclu
                     <aside class="notes" data-markdown>
 * Git thinks of its data more like a set of snapshots of a mini-filesystem
 * Git looks for changes when you commit, takes a picture of what files look like and stores a reference to that snapshot.
-* To be efficient, if files have not changed, git doesn't store the file again. Just a link to the previous identical file it has already stored. 
+* To be efficient, if files have not changed, git doesn't store the file again since everything is referred to by hash. 
                     </aside>
                 </section>
 
@@ -219,6 +223,7 @@ Date:   Tue Apr 1 08:49:33 2014 +0200
                 <section>
                 <h2>Integrity is important!</h2>
                 <p>It means we can trust Git 100% to deliver the correct bytes to us.</p>
+                <aside class="notes">If I check out a commit hash on my PC and you check out the same commit hash on yours, we can be sure we're seeing the exact same data.</aside>
                 </section>
                 <section>
                     <h2>Git generally only adds data</h2>
@@ -226,6 +231,7 @@ Date:   Tue Apr 1 08:49:33 2014 +0200
 * Actions almost always add data to the git database
 * It is very difficult to get the system to do anything that is not undoable or make it erase data in any way
 * You can mess up before you commit. But once it's in there you can almost always get it back.
+* Trust Git!
                     </aside>
                 </section>
 
@@ -233,31 +239,15 @@ Date:   Tue Apr 1 08:49:33 2014 +0200
                     <h2>Git is extremely effective on storage</h2>
                     <aside class="notes" data-markdown>
 Example:
-The current Linux kernel repository, including the entire history 10 years back is only three times the size of its current checked-out working directory.
+The current Linux kernel repository, including the entire history 10 years back is only three times the size of its current checked-out working directory. That's _every_ single change done to the
+Linux source code, ~575.000 comits, by literally thousands of developers working pretty-much non-stop for 10 years. 
                     </aside>
                 </section>
-
-                <section>
-                    <h2>The three states</h2>
-                    <p>
-                        <ul>
-                            <li class="fragment">modified</li>
-                            <li class="fragment">staged</li>
-                            <li class="fragment">committed</li>
-                        </ul>
-                    </p>
-                    <aside class="notes" data-markdown>
-* Modified means that you have changed the file but have not committed it to your database yet.
-* Staged means that you have marked a modified file in its current version to go into your next commit snapshot.
-* Committed means that the data is safely stored in your local database.
-                    </aside>
-                </section>
-
                 <section>
                     <h2>The three main parts of a git repo</h2>
                     <p>
                         <ul>
-                            <li class="fragment">The git directory</li>
+                            <li class="fragment">The .git directory</li>
                             <li class="fragment">The working directory</li>
                             <li class="fragment">The staging area or index</li>
                         </ul>
@@ -268,9 +258,28 @@ The current Linux kernel repository, including the entire history 10 years back 
 * The staging area is a simple file, generally contained in your git directory, that stores information about what will go into your next commit. Sometimes referred to as the index, but it’s becoming standard to refer to it as the staging area.
                     </aside>
                 </section>
+                <section>
+                    <h3>Files exist in one of three (four) states</h3>
+                    <p>
+                        <ul>
+                            <li class="fragment">modified</li>
+                            <li class="fragment">staged</li>
+                            <li class="fragment">committed</li>
+                            <li class="fragment">(untracked)</li>
+                        </ul>
+                    </p>
+                    <aside class="notes" data-markdown>
+* Modified means that you have changed the file but have not committed it to your database yet.
+* Staged means that you have marked a modified file in its current version to go into your next commit snapshot.
+* Committed means that the data is safely stored in your local database.
+* A file can also be unknown to Git. That's called untacked.
+* Try not to use the phrase "checked in". The Checkin concept doesn't exist in Git.
+                    </aside>
+                </section>
+
 
                 <section>
-                    <h2>The basic git workflow</h2>
+                    <h2>A basic git workflow</h2>
                     <p class="fragment"><img src="images/GitIntro/localoperations.png" width="80%"/></p>
                     <aside class="notes" data-markdown>
 * You modify files in your working directory.
@@ -284,34 +293,21 @@ If a particular version of a file is in the git directory, it’s considered com
                     <h2>Getting Started</h2>
                     <h3>Installing Git</h3>
                 </section>
-
                 <section>
-                    <h3>The easiest way to get git on Windows</h3>
-                    <p><img src="images/GitIntro/githubdownload.png" width="80%" /></p>
+                    <h3>Just grab the official installer</h3>
+                    <p><img src="/images/GitIntro/download_git_official.png" alt="" width="80%" /><br />
+                    https://git-scm.com/</p>
                 </section>
-
                 <section>
-                    <h3>Or just grab the official installer</h3>
-                    <p><img src="/images/GitIntro/download_git_official.png" alt="" width="80%" /></p>
-                </section>
-
-                <section>
-                    <h3>Initial configuration</h3>
-                    <p>
-                        <img src="images/GitIntro/githubinitialconfig.png" width="80%" />
-                    </p>
-                    <aside class="notes">Use Powershell because it's cool!</aside>
-                </section>
-
-                <section>
-                    <h2>Use the console, Luke!</h2>
+                    <h2>Initial configuration</h2>
                     <div class="fragment">
                         <h3>Your identity</h3>
                         <pre><code data-trim class="no-highlight">
 > git config --global user.name "Jesper Hess Nielsen"
-> git config --global user.email "jesper@graffen.dk"
+> git config --global user.email "jnc@saxobank.com"
                         </code></pre>
                     </div>
+                    <aside class="notes">Force yourself to use the console instead of VS, until you understand what's going on.</aside>
                 </section>
 
                 <section>
@@ -319,7 +315,7 @@ If a particular version of a file is in the git directory, it’s considered com
                     <pre><code class="no-highlight" data-trim>
 > git config --list
 user.name=Jesper Hess Nielsen
-user.email=jesper@graffen.dk
+user.email=jnc@saxobank.com
 color.status=auto
 color.branch=auto
 color.interactive=auto
@@ -374,7 +370,7 @@ Initialized empty Git repository in D:/GitDemos/MyProject/.git/
                     </p>
                     <p class="fragment">
                         <img src="images/GitIntro/dolly-sheep.jpg" /><br />
-                        Nope, not like the sheep.
+                        Kind of like the sheep.
                     </p>
                     <aside class="notes">
                         (demo) Clone from TFS git url to local machine
@@ -422,6 +418,7 @@ Remember the three states from earlier?
 * modified
 * staged
 * committed
+* untracked
                     </aside>
                 </section>
                 <section>
