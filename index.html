@@ -749,9 +749,6 @@ The -v switch shows the last commit on each branch.
 --merged and --no-merged options can filter this list to branches that you have or have not yet merged into the branch you’re currently on.
                     </aside>
                 </section>
-                <section>
-                    <h1>Collaborating with others</h1>
-                </section>                
             </section>
             <section>
                 <section>
@@ -779,13 +776,13 @@ The -v switch shows the last commit on each branch.
                 </section>
                 <section>
                     <h2>But there's also another way</h2>
-                    <p>You can apply the <em>patch</em> of the change C4 and reapply it on top of C3</p>
-                    <pre><code class="bash" data-trim>
+                    <pre class="fragment"><code class="bash" data-trim>
 $ git checkout experiment
 $ git rebase master
 First, rewinding head to replay your work on top of it...
 Applying: added staged command
 </code></pre>
+                <aside class="notes">You can apply the <em>patch</em> of the change C4 and reapply it on top of C3</aside>
                 </section>
                 <section>
                     <h2>This is how it looks now</h2>
