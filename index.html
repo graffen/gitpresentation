@@ -60,10 +60,8 @@
                 <h1>What is git?</h1>
                 <p>Git is a <span style="color: red">free</span> and <span style="color: orange;">open source</span> <b>distributed</b> <span style="color: yellow;">version control system</span> designed to handle everything from <span style="color: yellow">small</span> to <span style="color: red">very large</span> projects with <span style="color: fuchsia">speed</span> and <span style="color: orangered">efficiency</span>.</p>
             </section>
-
             <section>
                 <h1>Why git?</h1>
-                <h2> - a short history lesson</h2>
                 <aside class="notes" data-markdown>
 * Created by Linus Torvalds in 2005 to replace BitKeeper
 * Goals were:
@@ -74,7 +72,13 @@
     * Ability to handle large projects like the Linux Kernel with thousands of developers all over the world efficiently
                 </aside>
             </section>
-
+            <section>
+                <p><q>&ldquo;I'm egotistical, and I name all my projects after myself. First Linux, now git&rdquo;</q> <br /><br /><em>- Linus Torvalds</em></p>
+            </section>
+            <section>
+                <p>Git [ɡɪt]: British slang for &ldquo;pig-headed, they are always correct, argumentative&rdquo;
+                <aside class="notes">Truth is, the real reason will probably go with Linus to his grave</aside>
+            </section>
             <section>
                 <section>
                     <h1>Part 1</h1>
@@ -82,14 +86,15 @@
                 </section>
 
                 <section>
-                    <h1>About Version Control</h1>
-                    <h2>(Going back to basics)</h2>
+                    <h1>VCS in general</h1>
+                    <aside class="notes">
+                        Just a quick recap, going back to basics
+                    </aside>
                 </section>
-
                 <section>
                     <h2>Local Version Control Systems</h2>
                     <p>
-                        <img class="fragment" src="images/GitIntro/local-vcs.png" width="50%" />
+                        <img src="images/GitIntro/local-vcs.png" width="50%" />
                         <h3 class="fragment">Can't talk to the network</h3>
                     </p>
                     <aside class="notes" data-markdown>
@@ -97,9 +102,9 @@
 * Cannot be used over the network
                     </aside>
                 </section>
-                <section>
+                <section data-transition="slide-in">
                     <h2>Or just use folders...</h2>
-                    <p class="fragment"><img src="images/GitIntro/local-vcs-folders.png" /></p>
+                    <p><img src="images/GitIntro/local-vcs-folders.png" /></p>
                     <aside class="notes" data-markdown>
 * Local directories (- timestamped if you're clever)
 * But what if we want to collaborate with other developers?
@@ -107,7 +112,7 @@
                 </section>
                 <section>
                     <h2>Centralized Version Control Systems</h2>
-                    <p class="fragment roll-in">
+                    <p>
                         <img src="images/GitIntro/centralized-vcs.png" width="50%" />
                         <h3 class="fragment">Require network access!</h3>
                     </p>
@@ -125,14 +130,14 @@
 
                 <section>
                     <h3>Distributed Version Control Systems</h3>
-                    <p class="fragment roll-in">
+                    <p>
                         <img src="images/GitIntro/distributed-vcs.png" width="40%" />
                         <h3 class="fragment">Do not require network access</h3>
                     </p>
                     <aside class="notes" data-markdown>
 * Git, Mercurial, Bazaar, Darcs
 * Clients get full mirror of repo
-* Every checkout essentially a full backup of all data
+* Every clone essentially a full backup of all data
 * Allow you to connect to remote repos & push and pull from there
 * Set up complex workflows such as heirarchical models that centralized VCSs don't allow
                     </aside>
@@ -149,18 +154,8 @@
 * Clear your mind of things you know from SVN, TFS, Perforce.
 * Doing so will help you avoid confusion
 * Git stores and thinks about information much differently than these systems.
-
-I'll stop using crazy colors now.
                     </aside>
                 </section>
-
-                <section>
-                    <h2>Snapshots. Not Differences.</h2>
-                    <aside class="notes" data-markdown>
-* This is a key difference between git and other VCSs.
-                    </aside>
-                </section>
-
                 <section>
                     <h2>Other systems store data as deltas to a base version of each file.</h2>
                     <p class="fragment">
@@ -170,16 +165,22 @@ I'll stop using crazy colors now.
 The major difference between Git and any other VCS (Subversion and friends included) is the way Git thinks about its data. Conceptually, most other systems store information as a list of file-based changes. These systems (CVS, Subversion, Perforce, Bazaar, and so on) think of the information they keep as a set of files and the changes made to each file over time.
                     </aside>
                 </section>
-
                 <section>
-                    <h2>Git stores data as snapshots of the project over time</h2>
+                    <h2>Snapshots. Not Differences.</h2>
                     <p class="fragment">
                         <img src="images/GitIntro/checkins-snapshots.png" width="80%" />
                     </p>
+
                     <aside class="notes" data-markdown>
 * Git thinks of its data more like a set of snapshots of a mini-filesystem
 * Git looks for changes when you commit, takes a picture of what files look like and stores a reference to that snapshot.
 * To be efficient, if files have not changed, git doesn't store the file again since everything is referred to by hash. 
+                    </aside>
+                </section>
+
+                <section>
+                    <h2>Git stores data as snapshots of the project over time</h2>
+                    <aside class="notes" data-markdown>
                     </aside>
                 </section>
 
@@ -200,12 +201,12 @@ The major difference between Git and any other VCS (Subversion and friends inclu
                         <li>Everything is checksummed before storage</li>
                         <li class="fragment">
                             Git uses SHA-1 hashes to perform the checksum
-                            <pre><code data-trim class="bash">24b9da6552252987aa493b52f8696cd6d3b00373</code></pre>
+                            <pre><code class="hljs-bash">24b9da6552252987aa493b52f8696cd6d3b00373</code></pre>
                         </li>
                         <li class="fragment">
                             SHA-1's are used to reference every object in git
                             <pre>
-<code data-trim class="bash">
+<code data-trim class="hljs-bash">
 > git log
 commit 82bc0d42140bd857bcee94380d35ba680ac357f3
 Author: Jesper Hess Nielsen &lt;jesper@graffen.dk&gt;
@@ -239,7 +240,7 @@ Date:   Tue Apr 1 08:49:33 2014 +0200
                     <h2>Git is extremely effective on storage</h2>
                     <aside class="notes" data-markdown>
 Example:
-The current Linux kernel repository, including the entire history 10 years back is only three times the size of its current checked-out working directory. That's _every_ single change done to the
+The current Linux kernel repository, including the entire history 10 years back is only three times the size of its current checked-out working directory. That's ~1.7GB for _every_ single change done to the
 Linux source code, ~575.000 comits, by literally thousands of developers working pretty-much non-stop for 10 years. 
                     </aside>
                 </section>
@@ -357,7 +358,6 @@ The git command line is generally very helpful and verbose.
                     </aside>
                 </section>
             </section>
-
             <section>
                 <section>
                     <h1>Part 2</h1>
