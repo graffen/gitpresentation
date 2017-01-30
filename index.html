@@ -165,25 +165,17 @@
 The major difference between Git and any other VCS (Subversion and friends included) is the way Git thinks about its data. Conceptually, most other systems store information as a list of file-based changes. These systems (CVS, Subversion, Perforce, Bazaar, and so on) think of the information they keep as a set of files and the changes made to each file over time.
                     </aside>
                 </section>
-                <section>
-                    <h2>Snapshots. Not Differences.</h2>
+                <section> 
+                    <h2>Snapshots! Not Differences.</h2>
                     <p class="fragment">
                         <img src="images/GitIntro/checkins-snapshots.png" width="80%" />
                     </p>
-
                     <aside class="notes" data-markdown>
 * Git thinks of its data more like a set of snapshots of a mini-filesystem
 * Git looks for changes when you commit, takes a picture of what files look like and stores a reference to that snapshot.
 * To be efficient, if files have not changed, git doesn't store the file again since everything is referred to by hash. 
                     </aside>
                 </section>
-
-                <section>
-                    <h2>Git stores data as snapshots of the project over time</h2>
-                    <aside class="notes" data-markdown>
-                    </aside>
-                </section>
-
                 <section>
                     <h2>Nearly every operation is local</h2>
                     <aside class="notes" data-markdown>
@@ -278,16 +270,7 @@ Linux source code, ~575.000 comits, by literally thousands of developers working
                     </aside>
                 </section>
                 <section>
-                    <h2>From one state to the next</h2>
                     <img src="images/GitIntro/filestatuslifetime.png" width="80%" />
-                    <aside class="notes" data-markdown>
-Remember the three states from earlier?
-
-* modified
-* staged
-* committed
-* untracked
-                    </aside>
                 </section>
 
                 <section>
