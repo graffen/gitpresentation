@@ -744,33 +744,34 @@ The -v switch shows the last commit on each branch.
                 </section>
                 <section>
                     <h2>The basic rebase</h2>
-                    <h3>- a quick recap</h3>
-                    <img src="images/GitIntro/rebasing/basic-rebase-1.png" width="80%" />
-                    <aside class="notes" data-markdown>
-                    If we look at our merge example, we remember that we diverged our work and made commits on two different branches. 
+                    <aside class="notes">
+                        Quick walk-through of the most basic rebase, using the example from before. 
                     </aside>
                 </section>
                 <section>
-                    <h2>Three-way merge</h2> 
-                    <img src="images/GitIntro/rebasing/basic-rebase-2.png" width="80%" />
+                    <h2>Our current status</h2>
+                    <img src="images/GitIntro/rebasing/basic-rebase-1.png" />
                     <aside class="notes" data-markdown>
-                    The easiest way to integrate the branches, as we’ve already covered, is the merge command. It performs a three-way merge between the two latest branch snapshots (C3 and C4) and the most recent common ancestor of the two (C2), creating a new snapshot (and commit).
+                    If we look at our merge example, we remember that we diverged our work and made commits on two different branches.  
+                    Easiest way to integrate = merge.  
+                    What if we could simply apply our change on top of master?
                     </aside>
                 </section>
                 <section>
-                    <h2>But there's also another way</h2>
-                    <pre class="fragment"><code class="bash" data-trim>
+                    <pre><code class="bash" data-trim>
 $ git checkout experiment
 $ git rebase master
 First, rewinding head to replay your work on top of it...
 Applying: added staged command
 </code></pre>
-                <aside class="notes">You can apply the <em>patch</em> of the change C4 and reapply it on top of C3</aside>
-                </section>
-                <section>
-                    <h2>This is how it looks now</h2>
-                    <img src="images/GitIntro/rebasing/basic-rebase-3.png" width="80%" />
-                    <aside class="notes">It works by going to the common ancestor of the two branches (the one you’re on and the one you’re rebasing onto), getting the diff introduced by each commit of the branch you’re on, saving those diffs to temporary files, resetting the current branch to the same commit as the branch you are rebasing onto, and finally applying each change in turn.</aside>
+                    <p class="fragment">
+                        <img src="images/GitIntro/rebasing/basic-rebase-3.png" />
+                    </p>
+
+                <aside class="notes">
+                    You can apply the <em>patch</em> of the change C4 and reapply it on top of C3<br />
+                    It works by going to the common ancestor of the two branches (the one you’re on and the one you’re rebasing onto), getting the diff introduced by each commit of the branch you’re on, saving those diffs to temporary files, resetting the current branch to the same commit as the branch you are rebasing onto, and finally applying each change in turn.s
+                    </aside>
                 </section>
                 <section>
                     <h2>Now you can just fast-forward master</h2>
