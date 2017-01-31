@@ -50,9 +50,9 @@
                         <li class="fragment">What is git?</li>
                         <li class="fragment">Getting started</li>
                         <li class="fragment">Git basics</li>
+                        <li class="fragment">Demo</li>
                         <li class="fragment">Git branching, merging & rebasing</li>
                         <li class="fragment">Git workflows</li>
-                        <li class="fragment">Demo/Hands-on <br /><small>(we probably won't have time for this today)</small></li>
                     </ul>
                 </p>
             </section>
@@ -193,7 +193,7 @@ The major difference between Git and any other VCS (Subversion and friends inclu
                         <li>Everything is checksummed before storage</li>
                         <li class="fragment">
                             Git uses SHA-1 hashes to perform the checksum
-                            <pre><code class="hljs-bash">24b9da6552252987aa493b52f8696cd6d3b00373</code></pre>
+                            <blockquote><small>24b9da6552252987aa493b52f8696cd6d3b00373</small></blockquote>
                         </li>
                         <li class="fragment">
                             SHA-1's are used to reference every object in git
@@ -229,7 +229,7 @@ Date:   Tue Apr 1 08:49:33 2014 +0200
                 </section>
 
                 <section>
-                    <h2>Git is extremely effective on storage</h2>
+                    <h2>Git is very effective on storage</h2>
                     <aside class="notes" data-markdown>
 Example:
 The current Linux kernel repository, including the entire history 10 years back is only three times the size of its current checked-out working directory. That's ~1.7GB for _every_ single change done to the
@@ -237,7 +237,7 @@ Linux source code, ~575.000 comits, by literally thousands of developers working
                     </aside>
                 </section>
                 <section>
-                    <h2>The three main parts of a git repo</h2>
+                    <h2>A Git project is</h2>
                     <p>
                         <ul>
                             <li class="fragment">The .git directory</li>
@@ -271,6 +271,7 @@ Linux source code, ~575.000 comits, by literally thousands of developers working
                 </section>
                 <section>
                     <img src="images/GitIntro/filestatuslifetime.png" width="80%" />
+                    <aside class="notes">The concept of "checking out a file" does not exist in Git.</aside>
                 </section>
 
                 <section>
@@ -296,7 +297,7 @@ If a particular version of a file is in the git directory, it’s considered com
                 <section>
                     <h2>Initial configuration</h2>
                     <div class="fragment">
-                        <h3>Your identity</h3>
+                        <h3>Who are you?</h3>
                         <pre><code data-trim class="bash">
 > git config --global user.name "Jesper Hess Nielsen"
 > git config --global user.email "jnc@saxobank.com"
@@ -363,8 +364,7 @@ Initialized empty Git repository in D:/GitDemos/MyProject/.git/
 </code></pre>
                     </p>
                     <p class="fragment">
-                        <img src="images/GitIntro/dolly-sheep.jpg" /><br />
-                        Kind of like the sheep.
+                       git clone is your starting point for working with existing code.
                     </p>
                     <aside class="notes">
                         (demo) Clone from TFS git url to local machine
@@ -383,6 +383,40 @@ Resolving deltas: 100% (1270/1270), done.
 Checking connectivity... done
 </code></pre>
                     </p>
+                    <aside class="notes">
+                    - creates local repo for you, copying and tracking the master branch from the remote location.
+                    </aside>
+                </section>
+                <section>
+                    <h1>Remotes</h1>
+                    <p><em>origin</em> is created for you when you clone</p>
+                    <p class="fragment">
+                    <pre><code data-trim class="bash">git remote //List remotes</code></pre>
+                    <pre><code data-trim class="bash">git remote show NAME //List details</code></pre>
+                    <pre><code data-trim class="bash">git remote add NAME URL //Add new remote</code></pre>
+                    </p>
+                </section>
+                <section>
+                    <h1>The index</h1>
+                    <pre><code class="bash">git add PATH //store a file in the index</code></pre>
+                    <pre><code class="bash">git rm PATH //remove a file from the index/repo</code></pre>
+                    <pre><code class="bash">git status //show the current index</code></pre>
+                    <pre><code class="bash">git commit //commit index, clear index</code></pre>
+                    <aside class="notes">The index keeps track of files that you want to add to your next commit.<br />
+                    The index stores the version of the file that will be committed to the repository.<br />
+                    You can modify a file in your WD after adding it to the index. Those changes will not be committed.</aside>
+                </section>
+                <section>
+                    <h1>git commit</h1>
+                    <p class="fragment">Commits are local!
+                    <div class="fragment">- therefore commits are cheap and fast.</div></p>
+                    <p class="fragment">Commit often and all the time!</p>
+                    <aside class="notes">
+                    Commit only affects your repository. Not the origin or any other remote repo.<br />
+                    You must explicitly git push in order to share your commits.<br />
+                    <aside class="notes">
+                        Commit is used to persist changes to your repository.
+                    </aside>
                 </section>
                 <section>
                     <h2>Protocol support</h2>
@@ -403,16 +437,17 @@ Checking connectivity... done
             <section>
                 <section>
                     <h1>Part 3</h1>
-                    <h2>Git Branching</h2>
+                    <h2>Branching</h2>
                     <aside class="notes" data-markdown>
 This is going to be an extremely brief introduction to what branches are in git terminology.
                     </aside>
                 </section>
                 <section>
                     <h2>What is a branch?</h2>
-                    <p class="reveal">
-                        Nothing more than a 40-character text file inside your repository.
+                    <p class="fragment">
+                        branch == named commit
                     </p>
+                    <aside class="notes">In practice it's just a 40-character text file pointing to the commit at the tip of your branch.</aside>
                 </section>
                 <section>
                     <h2>How does branching in git work?</h2>
