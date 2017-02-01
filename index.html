@@ -214,8 +214,7 @@ Date:   Tue Apr 1 08:49:33 2014 +0200
                     </aside>
                 </section>
                 <section>
-                <h2>Integrity is important!</h2>
-                <p>It means we can trust Git 100% to deliver the correct bytes to us.</p>
+                <h2>Integrity is important</h2>
                 <aside class="notes">If I check out a commit hash on my PC and you check out the same commit hash on yours, we can be sure we're seeing the exact same data.</aside>
                 </section>
                 <section>
@@ -242,7 +241,7 @@ Linux source code, ~575.000 comits, by literally thousands of developers working
                         <ul>
                             <li class="fragment">The .git directory</li>
                             <li class="fragment">The working directory</li>
-                            <li class="fragment">The staging area or index</li>
+                            <li class="fragment">The staging area or <em>index</em></li>
                         </ul>
                     </p>
                     <aside class="notes" data-markdown>
@@ -255,17 +254,17 @@ Linux source code, ~575.000 comits, by literally thousands of developers working
                     <h3>Files exist in one of three (four) states</h3>
                     <p>
                         <ul>
+                            <li class="fragment">(untracked)</li>
                             <li class="fragment">modified</li>
                             <li class="fragment">staged</li>
                             <li class="fragment">committed</li>
-                            <li class="fragment">(untracked)</li>
                         </ul>
                     </p>
                     <aside class="notes" data-markdown>
+* A file can be unknown to Git. That's called untracked.
 * Modified means that you have changed the file but have not committed it to your database yet.
 * Staged means that you have marked a modified file in its current version to go into your next commit snapshot.
 * Committed means that the data is safely stored in your local database.
-* A file can also be unknown to Git. That's called untacked.
 * Try not to use the phrase "checked in". The Checkin concept doesn't exist in Git.
                     </aside>
                 </section>
@@ -371,8 +370,6 @@ Initialized empty Git repository in D:/GitDemos/MyProject/.git/
                     </aside>
                 </section>
                 <section>
-                    <h2>This is how it looks</h2>
-                    <p>
                         <pre><code data-trim class="bash">
 > git clone https://github.com/madskristensen/MiniBlog
 Cloning into 'MiniBlog'...
@@ -382,7 +379,6 @@ Receiving objects: 100% (2428/2428), 8.03 MiB | 14.49 MiB/s, done.
 Resolving deltas: 100% (1270/1270), done.
 Checking connectivity... done
 </code></pre>
-                    </p>
                     <aside class="notes">
                     - creates local repo for you, copying and tracking the master branch from the remote location.
                     </aside>
@@ -390,22 +386,50 @@ Checking connectivity... done
                 <section>
                     <h1>Remotes</h1>
                     <p><em>origin</em> is created for you when you clone</p>
-                    <p class="fragment">
-                    <pre><code data-trim class="bash">git remote //List remotes</code></pre>
-                    <pre><code data-trim class="bash">git remote show NAME //List details</code></pre>
-                    <pre><code data-trim class="bash">git remote add NAME URL //Add new remote</code></pre>
-                    </p>
+                </section>
+                <section>
+                <h1>List remotes</h1>
+                    <pre><code data-trim class="bash">$ git remote
+origin
+upstream
+</code></pre>
+                </section>
+                <section> 
+                    <h1>Show details</h1>
+                    <p>git remote show NAME</p>
+                    <pre><code data-trim class="bash">$ git remote show origin
+* remote origin
+  Fetch URL: https://github.com/graffen/openapi-clientlib-js.git
+  Push  URL: https://github.com/graffen/openapi-clientlib-js.git
+  HEAD branch: master
+  Remote branch:
+    master tracked
+  Local branch configured for 'git pull':
+    master merges with remote master
+  Local ref configured for 'git push':
+    master pushes to master (fast-forwardable)
+</code></pre>
+                </section>
+                <section>
+                    <h1>Add remote</h1>
+                    <p>git remote add NAME URL</p>
+                    <pre><code data-trim class="bash">$ git remote add otherremote http://remoterepo/myreponame</code></pre>
+                    <aside class="notes">You could add a colleagues repo as your remote</aside>
                 </section>
                 <section>
                     <h1>The index</h1>
-                    <pre><code class="bash">git add PATH //store a file in the index</code></pre>
-                    <pre><code class="bash">git rm PATH //remove a file from the index/repo</code></pre>
-                    <pre><code class="bash">git status //show the current index</code></pre>
-                    <pre><code class="bash">git commit //commit index, clear index</code></pre>
                     <aside class="notes">The index keeps track of files that you want to add to your next commit.<br />
                     The index stores the version of the file that will be committed to the repository.<br />
                     You can modify a file in your WD after adding it to the index. Those changes will not be committed.</aside>
                 </section>
+                <section>
+                    <pre><code class="bash">git add PATH //store a file in the index</code></pre>
+                    <pre><code class="bash">git rm PATH //remove a file from the index/repo</code></pre>
+                </section>
+                <section>
+                    <pre><code class="bash">git status //show the current state including index</code></pre>
+                    <pre><code class="bash">git commit //commit index, clear index</code></pre>
+               </section>
                 <section>
                     <h1>git commit</h1>
                     <p class="fragment">Commits are local!
@@ -444,24 +468,18 @@ This is going to be an extremely brief introduction to what branches are in git 
                 </section>
                 <section>
                     <h2>What is a branch?</h2>
-                    <p class="fragment">
-                        branch == named commit
-                    </p>
-                    <aside class="notes">In practice it's just a 40-character text file pointing to the commit at the tip of your branch.</aside>
+                    <aside class="notes">branch == named commit.<br />In practice it's just a 40-character text file pointing to the commit at the tip of your branch.</aside>
                 </section>
                 <section>
-                    <h2>How does branching in git work?</h2>
-                    <p class="fragment">
-                     - by moving that pointer around.
-                    </p>
+                    <h2>How does it work?</h2>
                     <aside class="notes" data-markdown>
-Let's take a look at this really simple concept.                    
+Really simple. A branch is just a text file containing the commit hash of the current tip of the branch. 
                     </aside>
                 </section>
                 <section>
                     <h2>What is a commit really?</h2>
-                    <p class="fragment">
-                        <img src="/images/GitIntro/commit_conceptual_view.png" alt="" width="80%" />
+                    <p>
+                        <img src="/images/GitIntro/commit_conceptual_view.png" alt="" />
                     </p>
                     <aside class="notes" data-markdown>
 * Remember that git stores data as a series of snapshots, NOT a series of deltas
@@ -470,12 +488,12 @@ Let's take a look at this really simple concept.
 * We create a repo with three files and commit them. Your git repo now contains five objects:
 * One blob for the contents of each of your three files
 * One tree that lists the contents of the directory and specifies filenames -> blob relationship
-* One commit with the pointer to the root tree and all the commit metadata. [SHOW IMAGE NOW]
+* One commit with the pointer to the root tree and all the commit metadata.
                     </aside>
                 </section>
                 <section>
                     <h2>Add more commits</h2>
-                    <p class="fragment"><img src="/images/GitIntro/branches-commits-chain.png" alt="" width="80%" /></p>
+                    <p><img src="/images/GitIntro/branches-commits-chain.png" alt="" /></p>
                     <aside class="notes" data-markdown>
 So we make some changes and add a few more commits.
 Each commit adds a pointer to the commit before it. After two commits your commit chain looks something like this
@@ -533,7 +551,7 @@ In this case you're still on master. git branch only creates a new branch. It di
                     <p>
                         <pre><code data-trim class="bash">
 > notepad test.rb
-> git commit -a -m "made a change"
+> git commit -a -m "Code stuff"
 </code></pre>
                     </p>
                     <p class="fragment">
@@ -541,7 +559,7 @@ In this case you're still on master. git branch only creates a new branch. It di
                     </p>
                     <aside class="notes" data-markdown>
 This is interesting because testing has moved forward but master still points to the previous commit.
-Let's swich back to the master branch (next slide)
+Let's swich back to the master branch (next slide). Note the -a -m. This is shorthand for "Stage everything then add a commit message". BAD PRACTICE!
                     </aside>
                 </section>
                 <section>
@@ -569,7 +587,7 @@ Let's make a few more changes and commit again.
                     <p>
                         <pre><code data-trim class="bash">
 > notepad test.rb
-> git commit -am "Made another change"
+> git commit -a -m "Make another change"
 </code></pre>
                     </p>
                     <p class="fragment">
@@ -645,7 +663,7 @@ $ notepad index.html
 (... fix problem ...)
 
 $ git commit -a -m 'Fix the broken email address'
-[hotfix 1fb7853] fixed the broken email address
+[hotfix 1fb7853] Fix broken email address
  1 file changed, 2 insertions(+)</code></pre>
                     <aside class="notes" data-markdown>
 - First checkout master
@@ -655,7 +673,7 @@ $ git commit -a -m 'Fix the broken email address'
                     </aside>
                 </section>
                 <section>
-                    <h2>Hotfix branch based on master</h2>
+                <h2>Now we have this</h2>
                     <img src="images/GitIntro/basicbranching/basic-branching-4.png" alt="" width="80%">
                     <aside class="notes" data-markdown>
 Now make sure your tests run and the hotfix is what we want and merge it back to master to deploy to production.  
@@ -682,7 +700,7 @@ Fast-forward
                     </aside>
                 </section>
                 <section>
-                    <h2>Now clean up and switch back</h2>
+                    <h2>Clean up and back to iss53</h2>
                     <pre class="fragment"><code data-trim class="bash">
 $ git branch -d hotfix
 Deleted branch hotfix (3a0874c).</code></pre>
@@ -693,8 +711,8 @@ $ vim index.html
 
 ( ... do stuff ...)
 
-$ git commit -a -m 'finish the new footer [issue 53]'
-[iss53 ad82d7a] finish the new footer [issue 53]
+$ git commit -a -m 'Finish the new footer [issue 53]'
+[iss53 ad82d7a] Finish the new footer [issue 53]
 1 file changed, 1 insertion(+)
 </code></pre>
                 </section>
@@ -784,7 +802,7 @@ The -v switch shows the last commit on each branch.
                     </aside>
                 </section>
                 <section>
-                    <h2>Our current status</h2>
+                    <h2>Setting the scene</h2>
                     <img src="images/GitIntro/rebasing/basic-rebase-1.png" />
                     <aside class="notes" data-markdown>
                     If we look at our merge example, we remember that we diverged our work and made commits on two different branches.  
@@ -819,7 +837,8 @@ $ git merge experiment</code></pre>
                 <section>
                     <h2>A more interesting example</h2>
                     <img src="images/GitIntro/rebasing/interesting-rebase-1.png" />
-                    <aside class="notes">You branched a topic branch (server) to add some server-side functionality to your project, and made a commit. Then, you branched off that to make the client-side changes (client) and committed a few times. Finally, you went back to your server branch and did a few more commits.</aside>
+                    <aside class="notes">You branched a topic branch (server) to add some server-side functionality to your project, and made a commit. Then, you branched off that to make the client-side changes (client) and committed a few times. Finally, you went back to your server branch and did a few more commits.<br />
+                    You can take the changes on client that aren’t on server (C8 and C9) and replay them on your master branch by using the --onto option of git rebase.</aside>
                 </section>
                 <section>
                     <h2>Prepare client-side for release</h2>
@@ -956,7 +975,11 @@ If you pull down work that was rewritten and rebase it on top of the new commits
                     </aside>
                 </section>
             </section>
-
+            <section>
+                <h1>Do what suits you &amp; your team</h1>
+                <aside class="notes">The whole point is that Git doesn't dicatate one workflow over the other.<br/>
+                Because branching is so cheap and it's so easy to integrate with others, you can do anything you like.</aside>
+            </section>
             <section>
                 <section>
                     <h1>Part 5</h1>
@@ -973,8 +996,7 @@ If you pull down work that was rewritten and rebase it on top of the new commits
                     </ul>
                     <aside class="notes" data-markdown>
 * Visual Studio has a built-in Git client but I personally don't like it a lot. It tries to hide too many central concepts, making Git seem "magical" to the user. 
-
-* Rumors have it that Microsoft is considering switching to git completely as the default TFS source control.
+* This is actually true for a lot of Git GUIs. 
                     </aside>
                 </section>
 
