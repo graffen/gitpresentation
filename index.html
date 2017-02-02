@@ -304,6 +304,26 @@ If a particular version of a file is in the git directory, it’s considered com
                     </div>
                     <aside class="notes">Force yourself to use the console instead of VS, until you understand what's going on.</aside>
                 </section>
+                <section>
+                    <h1>Default editor</h1>
+                    <div class="fragment">Atom
+                    <pre><code data-trim class="bash">
+                    git config --global core.editor "atom --wait"
+                    </code></pre></div>
+                    <div class="fragment">SublimeText
+                    <pre><code data-trim class="bash">
+                    git config --global core.editor "subl -n -w"
+                    </code></pre></div>
+                    <div class="fragment">VS Code
+                    <pre><code data-trim class="bash">
+                    git config --global core.editor "code --wait"
+                    </code></pre></div>
+                    <div class="fragment">Notepad
+                    <pre><code data-trim class="bash">
+                    git config --global core.editor "notepad"
+                    </code></pre></div>
+                    <p class="fragment"> - or if you're OK with 'vim' just stick with the default</p>
+                </section>
 
                 <section>
                     <h2>Checking your settings</h2>
@@ -717,7 +737,6 @@ $ git commit -a -m 'Finish the new footer [issue 53]'
 </code></pre>
                 </section>
                 <section>
-                    <h2>Work continues on iss53</h2>
                     <img src="images/GitIntro/basicbranching/basic-branching-6.png" alt="" width="80%">
                     <aside class="notes" data-markdown>
 It’s worth noting here that the work you did in your hotfix branch is not contained in the files in your iss53 branch. If you need to pull it in, you can merge your master branch into your iss53 branch by running git merge master, or you can wait to integrate those changes until you decide to pull the iss53 branch back into master later.
@@ -736,8 +755,8 @@ index.html |    1 +
 </code></pre>
                 </section>
                 <section>
-                    <h2>Snapshots used in a typical merge</h2>
                     <img src="images/GitIntro/basicbranching/basic-merging-1.png" alt="" width="80%">
+                    <p>Snapshots involved in a typical merge</p>
                     <aside class="notes" data-markdown>
 Because work has diverged, Git has to do a three-way merge using the two snapshots pointed to by the branch tips and the common ancestor of the two.
                     </aside>
@@ -784,6 +803,9 @@ The -v switch shows the last commit on each branch.
                     <aside class="notes" data-markdown>
 --merged and --no-merged options can filter this list to branches that you have or have not yet merged into the branch you’re currently on.
                     </aside>
+                </section>
+                <section>
+                   <h1>Demo</h1>
                 </section>
             </section>
             <section>
@@ -878,6 +900,10 @@ $ git branch -d server</code></pre>
                     <p>Neat and tidy, right?</p>
                 </section>
                 <section>
+                   <h1>Demo</h1>
+                </section>
+
+                <section>
                     <h2>The perils of Rebasing</h2>
                 </section>
                 <section>
@@ -926,6 +952,12 @@ $ git branch -d server</code></pre>
 
 If you pull down work that was rewritten and rebase it on top of the new commits from your partner, Git can often successfully figure out what is uniquely yours and apply them back on top of the new branch.</aside>
                 </section>
+                <section>
+                    <h1>git rebase -i</h1>
+                    <section>Clean up your commits before merging them to master</section>
+                </section>
+                <section>
+                    <h1>Demo</h1>
             </section>
             <section>
                 <section>

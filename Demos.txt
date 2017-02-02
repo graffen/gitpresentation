@@ -1,0 +1,77 @@
+Git Init
+========
+
+Remember to zoom in
+
+D:\GitDemos\01 - Init
+
+	- git init
+	- git status
+	- git add index.html
+	- git status
+        - git add derpy_cat.jpg
+	- git commit
+	- "Initial Commit"
+	- git status
+	- git log
+	- git log --oneline
+	
+BRANCHING
+---------
+	- git branch "MyBranch"
+	- git status                      (still on master!)
+	- git checkout "MyBranch"         (HEAD now points to MyBranch)
+	- Edit index.html
+		- color: yellow
+	- git add index.html
+	- git commit
+		"Change text color to yellow"
+	
+	- git checkout master
+	- Refresh browser
+
+	- git merge MyBranch		(Notice it's a fast-forward because direct ancestor)
+	- git log --oneline --graph
+	
+	- git reset --hard HEAD@{1}     (What if branches have diverged?)
+	- Edit index.html
+		- Text "Here's a picture of a derpy cat"
+	- git add index.html
+	- git commit
+		"Change image caption"
+	- git merge MyBranch           (Auto-merge, not fast-forward)
+	- git log --oneline --graph --decorate
+	- git branch -d MyBranch
+---
+
+REBASING
+--------
+D:\GitDemos\02 - Rebase
+	- git log --all --oneline --graph --decorate
+	- git config alias.logg 'log --oneline --graph --decorate'
+	- git config alias.logga 'log --all --oneline --graph --decorate'
+	- Explain what we see          (master/feature diverged, work happened on both)
+	- git merge featurebranch      (We could just merge)
+	- git logga
+	- git reset --hard HEAD@{1}
+	- git checkout featurebranch
+	- git rebase master
+	- git logga
+
+INTERACTIVE REBASE
+------------------
+d:\GitDemos\03 - Rebase (interactive)
+
+	- git logga                  (What have we got?)
+	- git checkout featurebranch
+	- git logga		    (We want to look at HEAD and 4 commits back in time)
+	- git rebase -i HEAD~4
+	- Reword commit 3 
+		"A better commit comment"
+	- git logg
+
+
+	
+
+	
+
